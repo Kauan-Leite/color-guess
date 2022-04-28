@@ -62,3 +62,12 @@ for(let index = 0; index < allBals.length; index += 1){
   allBals[index].addEventListener('click', resposta)
 }
 
+let btnReset = document.getElementById('reset-game');
+
+function resetGame(){
+  location.reload(true)
+}
+
+
+
+btnReset.addEventListener('click', resetGame)
