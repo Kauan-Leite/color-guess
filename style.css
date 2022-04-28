@@ -1,8 +1,25 @@
 *{
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 
 body{
   font-family: sans-serif;
+}
+
+div{
+  margin-top: 20px;
+  width: auto;
+  height: auto;
+  display: inline;
+}
+
+.ball{
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  margin: 3px;
+  border-radius: 100px;
+  border: 2px black solid;
 }
