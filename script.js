@@ -1,12 +1,20 @@
 let cor = document.getElementById('rgb-color');
 let divRespostas = document.getElementById('respostas');
+let score = document.getElementById('score');
+let scoreValue = 0;
 
-rgbResposta = '(' + Math.floor(Math.random() * 255) + ', ' + Math.floor(Math.random() * 255) + ', ' + Math.floor(Math.random() * 255) + ')';
-
-cor.innerHTML = rgbResposta;
+score.innerHTML = 'Score: ' + scoreValue;
 
 
-function addRespostas(){
+function createRandomColor(){
+  rgbResposta = '(' + Math.floor(Math.random() * 255) + ', ' + Math.floor(Math.random() * 255) + ', ' + Math.floor(Math.random() * 255) + ')';
+
+  cor.innerHTML = rgbResposta;
+}
+createRandomColor();
+
+
+function addAllCircles(){
   for (let index = 0; index < 6; index += 1){
     let circulo = document.createElement('div');
     circulo.classList.add('ball');
@@ -14,21 +22,21 @@ function addRespostas(){
     divRespostas.appendChild(circulo);
   }
 }
-addRespostas();
+addAllCircles();
 
 
-function colorBall(){
+function addColorsBalls(){
   for (let index = 0; index < 6; index += 1){
     let bolas = document.getElementsByClassName('ball')[index];
     bolas.style.backgroundColor = 'rgb(' + Math.floor(Math.random() * 255) + ', ' + Math.floor(Math.random() * 255) + ', ' + Math.floor(Math.random() * 255) + ')';
   }
 }
-colorBall();
+addColorsBalls();
 
 
 
 
-function correct(){
+function circleCorrect(){
   let randomAnswer = Math.floor(Math.random() * 10);
   if(randomAnswer > 5){
     randomAnswer = 5;
@@ -41,33 +49,42 @@ function correct(){
   correta.classList.add('correct');
   
 }
-correct();
+circleCorrect();
 
 
+let returnAnswer = document.getElementById('answer');
 
+function forResult(){
+  let allBals = document.getElementsByClassName('ball');
 
-
-let returnAnswer = document.getElementById('answer')
-let allBals = document.getElementsByClassName('ball');
-
-for(let index = 0; index < allBals.length; index += 1){
-  function resposta(){
-    if(allBals[index].classList.contains('wrong')){
-      returnAnswer.innerHTML = 'Errou! Tente novamente!'
+  for(let index = 0; index < allBals.length; index += 1){
+    function resultResposta(){
+      if(allBals[index].classList.contains('wrong')){
+        returnAnswer.innerHTML = 'Errou! Tente novamente!'
+      }
+      else if(allBals[index].classList.contains('correct')){
+        returnAnswer.innerHTML = 'Acertou!'
+        scoreValue += 3;
+        score.innerHTML = 'Score: ' + scoreValue;
+      }
     }
-    else if(allBals[index].classList.contains('correct')){
-      returnAnswer.innerHTML = 'Acertou!'
-    }
+    allBals[index].addEventListener('click', resultResposta)
   }
-  allBals[index].addEventListener('click', resposta)
 }
+forResult();
+
 
 let btnReset = document.getElementById('reset-game');
 
-function resetGame(){
-  location.reload(true)
+
+function resetColors(){
+  divRespostas.innerHTML = '';
+  createRandomColor();
+  addAllCircles();
+  addColorsBalls();
+  circleCorrect();
+  returnAnswer.innerHTML = 'Escolha uma cor';
+  forResult();
 }
 
-
-
-btnReset.addEventListener('click', resetGame)
+btnReset.addEventListener('click', resetColors)
